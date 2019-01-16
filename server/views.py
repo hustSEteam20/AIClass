@@ -34,5 +34,17 @@ def teacher_list(request):
     return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
 
 
+def course_list(request):
+    if request.method == 'POST':
+        id = request.POST.get('course_id')
+        name = request.POST.get('course_name')
+        teacher = request.POST.get('course_teacher')
+        time = request.POST.get('course_total')
+        models.Course.objects.create(course_id=id, course_name=name, course_teacher=teacher, course_total=time)
+    course_list = models.Course.objects.all()  # 查询教师信息
+    return render(request, 'server_temp/course_tables.html', {'data': course_list})
+
+
+
 
 

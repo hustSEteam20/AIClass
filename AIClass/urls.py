@@ -22,5 +22,6 @@ urlpatterns = [
     url('index/', views.index),
     url('student_list/', views.student_list),
     url('teacher_list/', views.teacher_list),
+    url('course_list/', views.course_list)
     # url()
 ]

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>数据表格页面</title>
+<title>学生信息</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../../static/server_static/css/bootstrap.min.css" />
@@ -17,7 +17,7 @@
 
 <!--Header-part-->
 <div id="header">
-  <h1><a href="dashboard.html">MatAdmin</a></h1>
+  <h1><a href="dashboard.html">AI Class</a></h1>
 </div>
 <!--close-Header-part-->
 <!--top-Header-menu-->
@@ -49,19 +49,12 @@
 </div>
 
 <!--start-top-serch-->
-<div id="search">
-  <input type="text" placeholder="输入搜索内容..."/>
-  <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
-</div>
-<!--close-top-serch--> 
-
-<!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-th"></i> 学生信息</a>
   <ul>
     <li><a href="/index"><i class="icon icon-home"></i> <span>首页</span></a> </li>
-    <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>课程信息</span></a> </li>
-    <li> <a href="/teacher_list"><i class="icon icon-inbox"></i> <span>教师信息</span></a> </li>
-    <li class="active"><a href="/student_list"><i class="icon icon-th"></i> <span>学生信息</span></a></li>
+    <li> <a href="/course_list"><i class="icon icon-signal"></i> <span>课程信息</span></a> </li>
+    <li class="active"> <a href="/teacher_list"><i class="icon icon-inbox"></i> <span>教师信息</span></a> </li>
+    <li><a href="/student_list"><i class="icon icon-th"></i> <span>学生信息</span></a></li>
     <li><a href="grid.html"><i class="icon icon-fullscreen"></i> <span>选课</span></a></li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>表单</span> </a>
       <ul>
@@ -132,13 +125,14 @@
                 </tr>
                {% for item in data %}
                 <tr>
-                    <td>{{ item.stu_id}}</td>
-                    <td>{{ item.stu_name }}</td>
-                    <td>{{ item.stu_sex }}</td>
-                    <td>{{ item.stu_age }}</td>
+                    <td>{{ item.teacher_id}}</td>
+                    <td>{{ item.teacher_name }}</td>
+                    <td>{{ item.teacher_sex }}</td>
+                    <td>{{ item.teacher_age }}</td>
                     <td>
                         <a href="#" class="btn btn-success">查看详细</a>
                         <a href="#" class="btn btn-danger">删除</a>
+                        <!-- <a href="/delete?id={{ item.teacher_id }}&name={{ item.teacher_name }}"-->
                     </td>
                 </tr>
                 {% endfor %}

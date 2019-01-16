@@ -59,9 +59,9 @@
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-th"></i> 学生信息</a>
   <ul>
     <li><a href="/index"><i class="icon icon-home"></i> <span>首页</span></a> </li>
-    <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>课程信息</span></a> </li>
+    <li class="active"> <a href="/course_list"><i class="icon icon-signal"></i> <span>课程信息</span></a> </li>
     <li> <a href="/teacher_list"><i class="icon icon-inbox"></i> <span>教师信息</span></a> </li>
-    <li class="active"><a href="/student_list"><i class="icon icon-th"></i> <span>学生信息</span></a></li>
+    <li><a href="/student_list"><i class="icon icon-th"></i> <span>学生信息</span></a></li>
     <li><a href="grid.html"><i class="icon icon-fullscreen"></i> <span>选课</span></a></li>
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>表单</span> </a>
       <ul>
@@ -93,8 +93,8 @@
 </div>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-    <h1>Tables</h1>
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">课程信息</a> </div>
+    <h1>课程信息</h1>
   </div>
   <div class="container-fluid">
     <hr>
@@ -108,10 +108,10 @@
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>学号</th>
-                  <th>姓名</th>
-                  <th>性别</th>
-                  <th>年龄</th>
+                  <th>课程号</th>
+                  <th>课程名</th>
+                  <th>任课老师</th>
+                  <th>课时</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -132,13 +132,12 @@
                 </tr>
                {% for item in data %}
                 <tr>
-                    <td>{{ item.stu_id}}</td>
-                    <td>{{ item.stu_name }}</td>
-                    <td>{{ item.stu_sex }}</td>
-                    <td>{{ item.stu_age }}</td>
+                    <td>{{ item.course_id}}</td>
+                    <td>{{ item.course_name }}</td>
+                    <td>{{ item.course_teacher.teacher_name }}</td>
+                    <td>{{ item.course_total }}</td>
                     <td>
                         <a href="#" class="btn btn-success">查看详细</a>
-                        <a href="#" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
                 {% endfor %}
