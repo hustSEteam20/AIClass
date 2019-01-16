@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Hello</h1>
+    <h1>用户输入：</h1>
+    <form action="/list/" method="post">
+        {% csrf_token %}
+        学号：<input type="text" name="stu_id" /><br />
+        姓名：<input type="text" name="stu_name" /><br />
+        性别：<input type="text" name="stu_sex" /><br />
+        年龄：<input type="text" name="stu_age" /><br />
+        <input type="submit" value="提交" />
+    </form>
+</body>
+</html>
