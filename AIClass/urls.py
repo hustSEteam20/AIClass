@@ -20,6 +20,7 @@ from server import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('index/', views.index),
-    url('list/', views.list),
+    url('student_list/', views.student_list),
+    url('teacher_list/', views.teacher_list),
     # url()
 ]

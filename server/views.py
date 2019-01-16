@@ -5,10 +5,10 @@ from server import models
 
 
 def index(request):
+    return render(request, 'server_temp/index.html')
 
-    return render(request, 'index.html')
 
-def list(request):
+def student_list(request):
     user_list = []
     if request.method == 'POST':
         id = request.POST.get('stu_id')
@@ -18,6 +18,21 @@ def list(request):
         print(id, name)
         models.Student.objects.create(stu_id=id, stu_name=name, stu_sex=sex, stu_age=age)
     user_list = models.Student.objects.all()
-    return render(request, 'server_temp/tables.html', {'data': user_list})
+    return render(request, 'server_temp/student_tables.html', {'data': user_list})
+
+
+def teacher_list(request):
+    if request.method == 'POST':
+        id = request.POST.get('teacher_id')
+        name = request.POST.get('teacher_name')
+        pwd = request.POST.get('teacher_pwd')
+        sex = request.POST.get('teacher_sex')
+        age = request.POST.get('teacher_age')
+        models.Teacher.objects.create(teacher_id=id, teacher_name=name, teacher_pwd=pwd,
+                                      teacher_sex=sex, teacher_age=age)
+    teacher_list = models.Teacher.objects.all()  # 查询教师信息
+    return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
+
+
 
 
