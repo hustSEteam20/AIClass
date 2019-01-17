@@ -84,7 +84,7 @@ class Student(models.Model):
     stu_id = models.CharField(verbose_name="学号",max_length=128, primary_key=True)
     stu_name = models.CharField(verbose_name="姓名", max_length=128)
     stu_img = models.ImageField(upload_to="img", verbose_name="照片")
-    stu_sex = models.CharField(verbose_name="性别", max_length=4, choices=GENDER_CHOICES)
+    stu_sex = models.CharField(verbose_name="性别", max_length=6, choices=GENDER_CHOICES)
     stu_age = models.IntegerField(verbose_name="年龄")
 
     def __str__(self):
@@ -100,7 +100,7 @@ class Teacher(models.Model):
     teacher_id = models.CharField(verbose_name="工号", max_length=128, primary_key=True)
     teacher_name = models.CharField(verbose_name="姓名", max_length=128)
     teacher_pwd = models.CharField(verbose_name="密码", max_length=128)
-    teacher_sex = models.CharField(verbose_name="性别", max_length=4, choices=GENDER_CHOICES)
+    teacher_sex = models.CharField(verbose_name="性别", max_length=6, choices=GENDER_CHOICES)
     teacher_age = models.IntegerField(verbose_name="年龄")
 
     def __str__(self):

@@ -17,11 +17,16 @@ from django.conf.urls import url
 from django.contrib import admin
 from server import views
 
+from django.views.static import serve
+from AIClass.settings import MEDIA_ROOT
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('index/', views.index),
     url('student_list/', views.student_list),
     url('teacher_list/', views.teacher_list),
-    url('course_list/', views.course_list)
-    # url()
+    url('course_list/', views.course_list),
+    url('student_detail/', views.student_detail),
+    url('stu_edit/', views.student_edit),
+    url(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT})
 ]
