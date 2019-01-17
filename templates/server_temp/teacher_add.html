@@ -6,10 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../../static/server_static/css/bootstrap.min.css" />
 <link rel="stylesheet" href="../../static/server_static/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="../../static/server_static/css/colorpicker.css" />
+<link rel="stylesheet" href="../../static/server_static/css/datepicker.css" />
 <link rel="stylesheet" href="../../static/server_static/css/uniform.css" />
 <link rel="stylesheet" href="../../static/server_static/css/select2.css" />
 <link rel="stylesheet" href="../../static/server_static/css/matrix-style.css" />
 <link rel="stylesheet" href="../../static/server_static/css/matrix-media.css" />
+<link rel="stylesheet" href="../../static/server_static/css/bootstrap-wysihtml5.css" />
 <link href="../../static/server_static/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 </head>
@@ -17,9 +20,10 @@
 
 <!--Header-part-->
 <div id="header">
-  <h1><a href="dashboard.html">AI Class</a></h1>
+  <h1><a href="dashboard.html">MatAdmin</a></h1>
 </div>
-<!--close-Header-part-->
+<!--close-Header-part--> 
+
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
   <ul class="nav">
@@ -49,14 +53,22 @@
 </div>
 
 <!--start-top-serch-->
-<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-th"></i> 学生信息</a>
-  <ul>
-    <li><a href="/index"><i class="icon icon-home"></i> <span>首页</span></a> </li>
-    <li> <a href="/course_list"><i class="icon icon-signal"></i> <span>课程信息</span></a> </li>
-    <li class="active"> <a href="/teacher_list"><i class="icon icon-inbox"></i> <span>教师信息</span></a> </li>
-    <li><a href="/student_list"><i class="icon icon-th"></i> <span>学生信息</span></a></li>
-    <li><a href="grid.html"><i class="icon icon-fullscreen"></i> <span>选课</span></a></li>
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>表单</span> </a>
+<div id="search">
+  <input type="text" placeholder="请输入搜索内容..."/>
+  <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
+</div>
+<!--close-top-serch--> 
+
+<!--sidebar-menu-->
+
+<div id="sidebar"> <a href="#" class="visible-phone"><i class="icon icon-list"></i>Forms</a>
+ <ul>
+    <li ><a href="index.html"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+    <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>图表统计</span></a> </li>
+    <li> <a href="widgets.html"><i class="icon icon-inbox"></i> <span>插件</span></a> </li>
+    <li ><a href="student_tables.html"><i class="icon icon-th"></i> <span>数据表格</span></a></li>
+    <li><a href="grid.html"><i class="icon icon-fullscreen"></i> <span>网格布局</span></a></li>
+    <li class="submenu active"> <a href="#"><i class="icon icon-th-list"></i> <span>表单</span> </a>
       <ul>
         <li><a href="form-common.html">基本表单</a></li>
         <li><a href="form-validation.html">带验证的表单</a></li>
@@ -84,82 +96,89 @@
     </li>
   </ul>
 </div>
+
+<!--close-left-menu-stats-sidebar-->
+
 <div id="content">
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="/index" title="跳转到首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">教师信息</a> </div>
-    <h1>教师信息</h1>
-  </div>
-  <div class="container-fluid">
-    <hr>
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>Data table</h5>
-          </div>
-          <div class="widget-content nopadding">
-            <table class="table table-bordered data-table">
-              <thead>
-                <tr>
-                  <th>工号</th>
-                  <th>姓名</th>
-                  <th>性别</th>
-                  <th>年龄</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="gradeX">
-                  <td>Trident</td>
-                  <td>zi</td>
-                    <td>1</td>
-                    <td>1</td>
-                  <td class="center">4</td>
-                </tr>
-                <tr class="gradeC">
-                  <td>Trident</td>
-                  <td>ma</td>
-                    <td>1</td>
-                    <td>1</td>
-                  <td class="center">5</td>
-                </tr>
-               {% for item in data %}
-                <tr>
-                    <td>{{ item.teacher_id}}</td>
-                    <td>{{ item.teacher_name }}</td>
-                    <td>{{ item.teacher_sex }}</td>
-                    <td>{{ item.teacher_age }}</td>
-                    <td>
-                        <a href="/teacher_detail?teacher_id={{ item.teacher_id }}" class="btn btn-success">查看详细</a>
-                        <a href="/teacher_delete?teacher_id={{ item.teacher_id }}" class="btn btn-danger">删除</a>
-                        <!-- <a href="/delete?id={{ item.teacher_id }}&name={{ item.teacher_name }}"-->
-                    </td>
-                </tr>
-                {% endfor %}
-{#                <tr>#}
-{#                    <td><a href="#" class="btn btn-danger">新增1</a></td>#}
-{#                </tr>#}
-              </tbody>
-            </table>
-            <div align="center" style="height: 60px;"><a href="/teacher_add" class="btn btn-info" style="width: 120px; height: 30px; line-height: 30px; margin-top: 10px">新增</a></div>
-          </div>
+<div id="content-header">
+  <div id="breadcrumb"> <a href="/index" title="跳转到首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="/teacher_list/" class="tip-bottom">教师信息</a> <a href="#" class="current">新增教师信息</a> </div>
+  <h1>新增教师信息</h1>
+</div>
+<div class="container-fluid">
+  <hr>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Form Elements</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form class="form-horizontal" action="/teacher_list/" method="post">
+            {% csrf_token %}
+            <div class="control-group">
+              <label class="control-label">工号</label>
+              <div class="controls">
+                  <input type="text" name="teacher_id" placeholder="工号"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">姓名</label>
+              <div class="controls">
+                <input type="text" name="teacher_name" placeholder="姓名"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">性别</label>
+              <div class="controls">
+                  男<input type="radio" name="teacher_sex" value="male" checked="checked"/>
+                  女<input type="radio" name="teacher_sex" value="female"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">年龄</label>
+              <div class="controls">
+                <input type="number" name="teacher_age" placeholder="年龄"/>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">密码</label>
+              <div class="controls">
+                <input type="text" name="teacher_pwd" placeholder="登录的密码"/>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success">新增</button>
+{#              <button type="submit" class="btn btn-primary">Reset</button>#}
+{#              <button type="submit" class="btn btn-info">Edit</button>#}
+              <a href="/teacher_list" class="btn btn-danger">取消</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
-</div>
+</div></div>
 <!--Footer-part-->
 <div class="row-fluid">
   <div id="footer" class="span12">Copyright &copy; 2018.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></div>
 </div>
-<!--end-Footer-part-->
+<!--end-Footer-part--> 
 <script src="../../static/server_static/js/jquery.min.js"></script>
 <script src="../../static/server_static/js/jquery.ui.custom.js"></script>
 <script src="../../static/server_static/js/bootstrap.min.js"></script>
+<script src="../../static/server_static/js/bootstrap-colorpicker.js"></script>
+<script src="../../static/server_static/js/bootstrap-datepicker.js"></script>
+<script src="../../static/server_static/js/jquery.toggle.buttons.html"></script>
+<script src="../../static/server_static/js/masked.js"></script>
 <script src="../../static/server_static/js/jquery.uniform.js"></script>
 <script src="../../static/server_static/js/select2.min.js"></script>
-<script src="../../static/server_static/js/jquery.dataTables.min.js"></script>
 <script src="../../static/server_static/js/matrix.js"></script>
-<script src="../../static/server_static/js/matrix.tables.js"></script>
+<script src="../../static/server_static/js/matrix.form_common.js"></script>
+<script src="../../static/server_static/js/wysihtml5-0.3.0.js"></script>
+<script src="../../static/server_static/js/jquery.peity.min.js"></script>
+<script src="../../static/server_static/js/bootstrap-wysihtml5.js"></script>
+<script>
+	$('.textarea_editor').wysihtml5();
+</script>
 </body>
 </html>
