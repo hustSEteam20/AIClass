@@ -1,6 +1,4 @@
-from django.shortcuts import render,redirect,reverse
-from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from server import models
 from AIClass import settings
 # Create your views here.
