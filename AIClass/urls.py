@@ -32,5 +32,6 @@ urlpatterns = [
     url('teacher_add/', views.teacher_add),
     url('teacher_delete/', views.teacher_delete),
     url('course_list/', views.course_list),
+    url('course_detail/', views.course_detail),
     url(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
 ]

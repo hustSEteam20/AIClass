@@ -93,8 +93,8 @@
 </div>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">课程信息</a> </div>
-    <h1>课程信息</h1>
+    <div id="breadcrumb"> <a href="/index" title="跳转到首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="/course_list" class="tip-bottom">课程信息</a> <a href="#" class="current">课程详细</a></div>
+    <h1>课程详细</h1>
   </div>
   <div class="container-fluid">
     <hr>
@@ -108,10 +108,10 @@
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>课程号</th>
-                  <th>课程名</th>
-                  <th>任课老师</th>
-                  <th>课时</th>
+                  <th>课次</th>
+                  <th>到课率</th>
+                  <th>课堂活跃度</th>
+                  <th>课堂时长</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -130,14 +130,14 @@
                     <td>1</td>
                   <td class="center">5</td>
                 </tr>
-               {% for item in data %}
+               {% for key,val in data.items %}
                 <tr>
-                    <td>{{ item.course_id}}</td>
-                    <td>{{ item.course_name }}</td>
-                    <td>{{ item.course_teacher.teacher_name }}</td>
-                    <td>{{ item.course_total }}</td>
+                    <td>{{ key }}</td>
+                    <td>{{ val.attendance_sum }}%</td>
+                    <td>{{ val.detail_answer }}</td>
+                    <td> 60min </td>
                     <td>
-                        <a href="/course_detail?course_id={{ item.course_id }}" class="btn btn-success">查看详细</a>
+                        <a href="#" class="btn btn-success">查看详细</a>
                     </td>
                 </tr>
                 {% endfor %}

@@ -109,7 +109,7 @@ class Teacher(models.Model):
 
 # 课程信息
 class Course(models.Model):
-    course_id = models.CharField(verbose_name="课程号", max_length=128)
+    course_id = models.CharField(verbose_name="课程号", max_length=128, primary_key=True)
     course_name = models.CharField(verbose_name="课程名", max_length=128)
     course_teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE)
     course_total = models.IntegerField(verbose_name="总课时")

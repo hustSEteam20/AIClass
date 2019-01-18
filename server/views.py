@@ -21,6 +21,44 @@ def student_list(request):
     return render(request, 'server_temp/student_tables.html', {'data': stu_list})
 
 
+def student_detail(request):
+    if request.method == "GET":
+        id = request.GET.get('stu_id')
+        student = models.Student.objects.get(stu_id=id)
+        if student:
+            return render(request, 'server_temp/student_detail.html', {'data': student})
+
+
+def student_edit(request):
+    if request.method == "POST":
+        id = request.POST.get('stu_id')
+        name = request.POST.get('stu_name')
+        # photo = request.POST.get('stu_photo')
+        try:
+            photo = request.FILES['stu_photo']
+            fname = '%s/img/%s' % (settings.MEDIA_ROOT, photo.name)
+            with open(fname, 'wb') as pic:
+                for c in photo.chunks():
+                    pic.write(c)
+            student = models.Student.objects.get(stu_id=id)
+            student.stu_img = fname
+            student.save()
+        except Exception as e:
+            pass
+        sex = request.POST.get('stu_sex')
+        age = request.POST.get('stu_age')
+        try:
+            student = models.Student.objects.get(stu_id=id)
+            student.stu_name = name
+            student.stu_sex = sex
+            student.stu_age = age
+            student.save()
+            stu_list = models.Student.objects.all()
+            return render(request, 'server_temp/student_tables.html', {'data': stu_list})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
+
 def teacher_list(request):
     if request.method == 'POST':
         id = request.POST.get('teacher_id')
@@ -92,42 +130,28 @@ def course_list(request):
     return render(request, 'server_temp/course_tables.html', {'data': course_list})
 
 
-def student_detail(request):
-    if request.method == "GET":
-        id = request.GET.get('stu_id')
-        student = models.Student.objects.get(stu_id=id)
-        if student:
-            return render(request, 'server_temp/student_detail.html', {'data': student})
-
-
-def student_edit(request):
-    if request.method == "POST":
-        id = request.POST.get('stu_id')
-        name = request.POST.get('stu_name')
-        # photo = request.POST.get('stu_photo')
+def course_detail(request):
+    if request.method == 'GET':
+        id = request.GET.get('course_id')
+        print(type(id))
+        print(id)
         try:
-            photo = request.FILES['stu_photo']
-            fname = '%s/img/%s' % (settings.MEDIA_ROOT, photo.name)
-            with open(fname, 'wb') as pic:
-                for c in photo.chunks():
-                    pic.write(c)
-            student = models.Student.objects.get(stu_id=id)
-            student.stu_img = fname
-            student.save()
-        except Exception as e:
-            pass
-        sex = request.POST.get('stu_sex')
-        age = request.POST.get('stu_age')
-        try:
-            student = models.Student.objects.get(stu_id=id)
-            student.stu_name = name
-            student.stu_sex = sex
-            student.stu_age = age
-            student.save()
-            stu_list = models.Student.objects.all()
-            return render(request, 'server_temp/student_tables.html', {'data': stu_list})
+            course_detail_list = models.CourseDetail.objects.filter(course_id_id=id)
+            student_sum = len(models.CourseSelection.objects.filter(course_id=id))
+            print(student_sum)
+            detail_list = {}
+            for detail in course_detail_list:
+                if detail.course_time not in detail_list:
+                    detail_list[detail.course_time] = {'attendance_sum': 0, 'detail_answer': 0}
+                detail_list[detail.course_time]['attendance_sum'] += 1
+                detail_list[detail.course_time]['detail_answer'] += detail.detail_answer
+            for detail in detail_list:
+                detail_list[detail]['attendance_sum'] /= student_sum * 0.01
+                detail_list[detail]['detail_answer'] /= student_sum * 0.01
+            return render(request, 'server_temp/course_detail.html', {'data': detail_list})
         except Exception as e:
             return render(request, 'server_temp/error404.html')
+
 
 
 
