@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
 from server import models
 from AIClass import settings
 # Create your views here.
@@ -33,6 +34,53 @@ def teacher_list(request):
                                       teacher_sex=sex, teacher_age=age)
     teacher_list = models.Teacher.objects.all()  # 查询教师信息
     return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
+
+
+def teacher_detail(request):
+    if request.method == 'GET':
+        id = request.GET.get('teacher_id')
+        try:
+            teacher = models.Teacher.objects.get(teacher_id=id)
+            course = teacher.course_set.all()
+            course = len(course)
+            return render(request, 'server_temp/teacher_detail.html', {'data': teacher, 'course': course})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
+
+def teacher_save(request):
+    if request.method == 'POST':
+        id = request.POST.get('teacher_id')
+        name = request.POST.get('teacher_name')
+        sex = request.POST.get('teacher_sex')
+        age = request.POST.get('teacher_age')
+        pwd = request.POST.get('teacher_pwd')
+        try:
+            teacher = models.Teacher.objects.get(teacher_id=id)
+            teacher.teacher_name = name
+            teacher.teacher_sex = sex
+            teacher.teacher_age = age
+            teacher.teacher_pwd = pwd
+            teacher.save()
+            teacher_list = models.Teacher.objects.all()  # 查询教师信息
+            return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
+
+def teacher_delete(request):
+    if request.method == 'GET':
+        id = request.GET.get('teacher_id')
+    try:
+        models.Teacher.objects.filter(teacher_id=id).delete()
+        teacher_list = models.Teacher.objects.all()  # 查询教师信息
+        return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
+    except Exception as e:
+        return render(request, 'server_temp/error404.html')
+
+
+def teacher_add(request):
+    return render(request, 'server_temp/teacher_add.html')
 
 
 def course_list(request):

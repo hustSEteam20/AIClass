@@ -24,9 +24,13 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('index/', views.index),
     url('student_list/', views.student_list),
-    url('teacher_list/', views.teacher_list),
-    url('course_list/', views.course_list),
     url('student_detail/', views.student_detail),
     url('stu_edit/', views.student_edit),
-    url(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT})
+    url('teacher_list/', views.teacher_list),
+    url('teacher_detail/', views.teacher_detail),
+    url('teacher_save/', views.teacher_save),
+    url('teacher_add/', views.teacher_add),
+    url('teacher_delete/', views.teacher_delete),
+    url('course_list/', views.course_list),
+    url(r'^media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
 ]
