@@ -143,12 +143,36 @@ def course_detail(request):
             for detail in course_detail_list:
                 if detail.course_time not in detail_list:
                     detail_list[detail.course_time] = {'attendance_sum': 0, 'detail_answer': 0}
-                detail_list[detail.course_time]['attendance_sum'] += 1
+                if detail.detail_attendance:
+                    detail_list[detail.course_time]['attendance_sum'] += 1
                 detail_list[detail.course_time]['detail_answer'] += detail.detail_answer
             for detail in detail_list:
                 detail_list[detail]['attendance_sum'] /= student_sum * 0.01
                 detail_list[detail]['detail_answer'] /= student_sum * 0.01
-            return render(request, 'server_temp/course_detail.html', {'data': detail_list})
+            return render(request, 'server_temp/course_detail.html', {'data': detail_list,'course_id':id})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
+
+def course_detail_period(request):
+    if request.method == 'GET':
+        course_id = request.GET.get('course_id')
+        period_id = request.GET.get('period_id')
+        #print(type(id))
+        #print(id)
+        try:
+            course_detail_list = models.CourseDetail.objects.filter(course_id=course_id,course_time=period_id)
+            print(course_detail_list)
+            # detail_list = {}
+            # for detail in course_detail_list:
+            #     if detail.course_time not in detail_list:
+            #         detail_list[detail.course_time] = {'attendance_sum': 0, 'detail_answer': 0}
+            #     detail_list[detail.course_time]['attendance_sum'] += 1
+            #     detail_list[detail.course_time]['detail_answer'] += detail.detail_answer
+            # for detail in detail_list:
+            #     detail_list[detail]['attendance_sum'] /= student_sum * 0.01
+            #     detail_list[detail]['detail_answer'] /= student_sum * 0.01
+            return render(request, 'server_temp/course_detail_period.html', {'data': course_detail_list, 'course_id':course_id})
         except Exception as e:
             return render(request, 'server_temp/error404.html')
 

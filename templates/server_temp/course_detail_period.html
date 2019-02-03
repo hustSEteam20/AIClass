@@ -93,8 +93,8 @@
 </div>
 <div id="content">
   <div id="content-header">
-    <div id="breadcrumb"> <a href="/index" title="跳转到首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="/course_list" class="tip-bottom">课程信息</a> <a href="#" class="current">课程详细</a></div>
-    <h1>课程详细</h1>
+    <div id="breadcrumb"> <a href="/index" title="跳转到首页" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="/course_list" class="tip-bottom">课程信息</a> <a href="/course_detail?course_id={{ course_id }}" class="current">课程详细</a> <a href="#" class="current">课次详细</a></div>
+    <h1>课次详细</h1>
   </div>
   <div class="container-fluid">
     <hr>
@@ -108,10 +108,11 @@
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>课次</th>
-                  <th>到课率</th>
-                  <th>课堂活跃度</th>
-                  <th>课堂时长</th>
+                  <th>学号</th>
+                  <th>姓名</th>
+                  <th>到课</th>
+                  <th>回答问题</th>
+                  <th>加分</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -121,6 +122,7 @@
                   <td>zi</td>
                     <td>1</td>
                     <td>1</td>
+                    <td>1</td>
                   <td class="center">4</td>
                 </tr>
                 <tr class="gradeC">
@@ -128,16 +130,23 @@
                   <td>ma</td>
                     <td>1</td>
                     <td>1</td>
+                    <td>1</td>
                   <td class="center">5</td>
                 </tr>
-               {% for key,val in data.items %}
+               {% for val in data %}
                 <tr>
-                    <td>{{ key }}</td>
-                    <td>{{ val.attendance_sum }}%</td>
+                    <td>{{ val.stu_id.stu_id }}</td>
+                    <td>{{ val.stu_id.stu_name }}</td>
+                    {% if val.detail_attendance %}
+                        <td>是</td>
+                    {% else %}
+                        <td>否</td>
+                    {% endif %}
+{#                    <td>{{ val.detail_attendance }}</td>#}
                     <td>{{ val.detail_answer }}</td>
-                    <td> 60min </td>
+                    <td>{{ val.detail_grade }}</td>
                     <td>
-                        <a href="/course_detail_period?course_id={{ course_id }}&period_id={{ key }}" class="btn btn-success">查看详细</a>
+                        <a href="#" class="btn btn-success">查看详细</a>
                     </td>
                 </tr>
                 {% endfor %}
