@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.template import RequestContext
 from server import models
 from AIClass import settings
 import os
@@ -21,30 +20,6 @@ def student_list(request):
         models.Student.objects.create(stu_id=id, stu_name=name, stu_sex=sex, stu_age=age)
     stu_list = models.Student.objects.all()
     return render(request, 'server_temp/student_tables.html', {'data': stu_list})
-
-
-def teacher_list(request):
-    if request.method == 'POST':
-        id = request.POST.get('teacher_id')
-        name = request.POST.get('teacher_name')
-        pwd = request.POST.get('teacher_pwd')
-        sex = request.POST.get('teacher_sex')
-        age = request.POST.get('teacher_age')
-        models.Teacher.objects.create(teacher_id=id, teacher_name=name, teacher_pwd=pwd,
-                                      teacher_sex=sex, teacher_age=age)
-    teacher_list = models.Teacher.objects.all()  # 查询教师信息
-    return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
-
-
-def course_list(request):
-    if request.method == 'POST':
-        id = request.POST.get('course_id')
-        name = request.POST.get('course_name')
-        teacher = request.POST.get('course_teacher')
-        time = request.POST.get('course_total')
-        models.Course.objects.create(course_id=id, course_name=name, course_teacher=teacher, course_total=time)
-    course_list = models.Course.objects.all()  # 查询教师信息
-    return render(request, 'server_temp/course_tables.html', {'data': course_list})
 
 
 def student_detail(request):
@@ -110,6 +85,125 @@ def student_edit(request):
             return render(request, 'server_temp/student_tables.html', {'data': stu_list})
         except Exception as e:
             return render(request, 'server_temp/error404.html')
+
+
+def teacher_list(request):
+    if request.method == 'POST':
+        id = request.POST.get('teacher_id')
+        name = request.POST.get('teacher_name')
+        pwd = request.POST.get('teacher_pwd')
+        sex = request.POST.get('teacher_sex')
+        age = request.POST.get('teacher_age')
+        models.Teacher.objects.create(teacher_id=id, teacher_name=name, teacher_pwd=pwd,
+                                      teacher_sex=sex, teacher_age=age)
+    teacher_list = models.Teacher.objects.all()  # 查询教师信息
+    return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
+
+
+def teacher_detail(request):
+    if request.method == 'GET':
+        id = request.GET.get('teacher_id')
+        try:
+            teacher = models.Teacher.objects.get(teacher_id=id)
+            course = teacher.course_set.all()
+            course = len(course)
+            return render(request, 'server_temp/teacher_detail.html', {'data': teacher, 'course': course})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
+
+def teacher_save(request):
+    if request.method == 'POST':
+        id = request.POST.get('teacher_id')
+        name = request.POST.get('teacher_name')
+        sex = request.POST.get('teacher_sex')
+        age = request.POST.get('teacher_age')
+        pwd = request.POST.get('teacher_pwd')
+        try:
+            teacher = models.Teacher.objects.get(teacher_id=id)
+            teacher.teacher_name = name
+            teacher.teacher_sex = sex
+            teacher.teacher_age = age
+            teacher.teacher_pwd = pwd
+            teacher.save()
+            teacher_list = models.Teacher.objects.all()  # 查询教师信息
+            return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
+
+def teacher_delete(request):
+    if request.method == 'GET':
+        id = request.GET.get('teacher_id')
+    try:
+        models.Teacher.objects.filter(teacher_id=id).delete()
+        teacher_list = models.Teacher.objects.all()  # 查询教师信息
+        return render(request, 'server_temp/teacher_tables.html', {'data': teacher_list})
+    except Exception as e:
+        return render(request, 'server_temp/error404.html')
+
+
+def teacher_add(request):
+    return render(request, 'server_temp/teacher_add.html')
+
+
+def course_list(request):
+    if request.method == 'POST':
+        id = request.POST.get('course_id')
+        name = request.POST.get('course_name')
+        teacher = request.POST.get('course_teacher')
+        time = request.POST.get('course_total')
+        models.Course.objects.create(course_id=id, course_name=name, course_teacher=teacher, course_total=time)
+    course_list = models.Course.objects.all()  # 查询教师信息
+    return render(request, 'server_temp/course_tables.html', {'data': course_list})
+
+
+def course_detail(request):
+    if request.method == 'GET':
+        id = request.GET.get('course_id')
+        print(type(id))
+        print(id)
+        try:
+            course_detail_list = models.CourseDetail.objects.filter(course_id_id=id)
+            student_sum = len(models.CourseSelection.objects.filter(course_id=id))
+            print(student_sum)
+            detail_list = {}
+            for detail in course_detail_list:
+                if detail.course_time not in detail_list:
+                    detail_list[detail.course_time] = {'attendance_sum': 0, 'detail_answer': 0}
+                if detail.detail_attendance:
+                    detail_list[detail.course_time]['attendance_sum'] += 1
+                detail_list[detail.course_time]['detail_answer'] += detail.detail_answer
+            for detail in detail_list:
+                detail_list[detail]['attendance_sum'] /= student_sum * 0.01
+                detail_list[detail]['detail_answer'] /= student_sum * 0.01
+            return render(request, 'server_temp/course_detail.html', {'data': detail_list,'course_id':id})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
+
+def course_detail_period(request):
+    if request.method == 'GET':
+        course_id = request.GET.get('course_id')
+        period_id = request.GET.get('period_id')
+        #print(type(id))
+        #print(id)
+        try:
+            course_detail_list = models.CourseDetail.objects.filter(course_id=course_id,course_time=period_id)
+            print(course_detail_list)
+            # detail_list = {}
+            # for detail in course_detail_list:
+            #     if detail.course_time not in detail_list:
+            #         detail_list[detail.course_time] = {'attendance_sum': 0, 'detail_answer': 0}
+            #     detail_list[detail.course_time]['attendance_sum'] += 1
+            #     detail_list[detail.course_time]['detail_answer'] += detail.detail_answer
+            # for detail in detail_list:
+            #     detail_list[detail]['attendance_sum'] /= student_sum * 0.01
+            #     detail_list[detail]['detail_answer'] /= student_sum * 0.01
+            return render(request, 'server_temp/course_detail_period.html', {'data': course_detail_list, 'course_id':course_id})
+        except Exception as e:
+            return render(request, 'server_temp/error404.html')
+
 
 
 
