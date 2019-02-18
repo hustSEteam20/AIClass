@@ -138,12 +138,13 @@
                     <td>{{ item.stu_age }}</td>
                     <td>
                         <a href="/student_detail?stu_id={{ item.stu_id }}" class="btn btn-success">查看详细</a>
-                        <a href="#" class="btn btn-danger">删除</a>
+                        <a href="/student_delete?stu_id={{ item.stu_id }}" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
+          <div align="center" style="height: 60px;"><a href="/student_add" class="btn btn-info" style="width: 120px; height: 30px; line-height: 30px; margin-top: 10px">新增</a></div>
           </div>
         </div>
       </div>

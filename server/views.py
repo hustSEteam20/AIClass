@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from server import models
 from AIClass import settings
+import os
 # Create your views here.
 
 
@@ -52,6 +53,33 @@ def student_detail(request):
         student = models.Student.objects.get(stu_id=id)
         if student:
             return render(request, 'server_temp/student_detail.html', {'data': student})
+
+
+def student_delete(request):
+    if request.method == 'GET':
+        id = request.GET.get('stu_id')
+    try:
+        student = models.Student.objects.get(stu_id=id)
+        print(student.stu_img.name)
+        img_url = student.stu_img.name
+        print(img_url)
+        # url = ''
+        # for i in range(len(img_url)-1):
+        #     print(url)
+        #     url += (img_url[i]+'\\')
+        # url += img_url[-1]
+        # print(url)
+        # img_url = img_url.replace(r'\','\\')
+        models.Student.objects.filter(stu_id=id).delete()
+        os.remove(img_url)
+        student_list = models.Student.objects.all()  # 查询教师信息
+        return render(request, 'server_temp/student_tables.html', {'data': student_list})
+    except Exception as e:
+        return render(request, 'server_temp/error404.html')
+
+
+def student_add(request):
+    return render(request, 'server_temp/student_add.html')
 
 
 def student_edit(request):
