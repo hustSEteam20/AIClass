@@ -5,6 +5,19 @@ import os
 # Create your views here.
 
 
+# 管理员登录后台系统
+def admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if username == 'admin'and password == 'admin':
+            return render(request, 'server_temp/index.html')
+        else:
+            return render(request, 'server_temp/login.html')
+    else:
+        return render(request, 'server_temp/login.html')
+
+
 def index(request):
     return render(request, 'server_temp/index.html')
 
