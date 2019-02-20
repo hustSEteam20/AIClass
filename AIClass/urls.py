@@ -22,6 +22,7 @@ from AIClass.settings import MEDIA_ROOT
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url('admin_login/', views.admin_login),
     url('index/', views.index),
     url('student_list/', views.student_list),
     url('student_detail/', views.student_detail),
