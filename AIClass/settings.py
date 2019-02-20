@@ -28,8 +28,7 @@ SECRET_KEY = '9d*51o667@-8ef--akethbbde#ndty8#ef#lf5t=9z!lk3-on='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-ALLOWED_HOSTS = ['192.168.1.5','127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '115.156.128.130']
 
 
 # Application definition
@@ -87,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',   # 数据库引擎
         'NAME': 'aiclass',  # 数据库名，先前创建的
         'USER': 'root',     # 用户名，可以自己创建用户
-        'PASSWORD': 'admin',  # 密码
+        'PASSWORD': '123',  # 密码
         'HOST': '127.0.0.1',  # mysql服务所在的主机ip
         'PORT': '3306',         # mysql服务端口
     }
