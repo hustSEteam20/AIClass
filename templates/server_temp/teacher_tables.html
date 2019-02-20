@@ -78,7 +78,11 @@
                 <tr>
                     <td>{{ item.teacher_id}}</td>
                     <td>{{ item.teacher_name }}</td>
-                    <td>{{ item.teacher_sex }}</td>
+                    {% if item.teacher_sex == 'male' %}
+                        <td>男</td>
+                    {% else %}
+                        <td>女</td>
+                    {% endif %}
                     <td>{{ item.teacher_age }}</td>
                     <td>
                         <a href="/teacher_detail?teacher_id={{ item.teacher_id }}" class="btn btn-success">查看详细</a>
